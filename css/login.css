@@ -1,0 +1,415 @@
+/* ============================================
+   京东创意商城 - 登录/注册页专属样式
+   作者：邹华 24215220130
+   包含：登录容器、玻璃拟态卡片、表单控件、验证码、
+         记住密码、注册切换、Toast提示
+   ============================================ */
+
+/* ========== 登录页body（深色渐变背景） ========== */
+.login-body {
+  background: linear-gradient(135deg, #1a1a2e 0%, #2d1a2e 50%, #1a1a2e 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;               /* 垂直居中 */
+  justify-content: center;           /* 水平居中 */
+  font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ========== 背景装饰圆（大圆浮动动画） ========== */
+.login-body .bg-circle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;              /* 不阻挡交互 */
+}
+/* 右上大圆（红色调） */
+.login-body .bg-circle.c1 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(200,22,35,0.08), transparent);
+  top: -150px; right: -100px;
+  animation: floatCircle 8s ease-in-out infinite;
+}
+/* 左下中圆（金色调） */
+.login-body .bg-circle.c2 {
+  width: 350px; height: 350px;
+  background: radial-gradient(circle, rgba(245,166,35,0.06), transparent);
+  bottom: -100px; left: -80px;
+  animation: floatCircle 10s ease-in-out infinite reverse;
+}
+/* 中间小圆（白色调） */
+.login-body .bg-circle.c3 {
+  width: 250px; height: 250px;
+  background: radial-gradient(circle, rgba(255,255,255,0.04), transparent);
+  top: 40%; left: 50%;
+  animation: floatCircle 12s ease-in-out infinite;
+}
+
+@keyframes floatCircle {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -30px) scale(1.05); }
+  66% { transform: translate(-20px, 20px) scale(0.95); }
+}
+
+/* ========== 登录卡片容器 ========== */
+.login-container {
+  width: 440px;
+  position: relative;
+  z-index: 10;                       /* 在背景装饰之上 */
+}
+
+/* ========== 玻璃拟态登录卡片 ========== */
+.login-card {
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(20px);        /* 毛玻璃模糊 */
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 20px;
+  padding: 45px 40px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+/* 顶部彩色跑马灯边框 */
+.login-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--jd-red, #c81623), var(--gold, #f5a623), var(--jd-red-light, #e60012));
+  background-size: 200% 100%;
+  animation: rainbowBar 3s linear infinite;
+}
+
+@keyframes rainbowBar {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ========== Logo区域 ========== */
+.login-card .login-logo {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.login-card .login-logo img {
+  width: 160px;
+  height: auto;                      /* 保持logo比例 */
+}
+
+.login-card .login-logo .logo-subtitle {
+  color: rgba(255,255,255,0.5);
+  font-size: 13px;
+  margin-top: 6px;
+  letter-spacing: 2px;
+}
+
+/* ========== 登录/注册切换Tab ========== */
+.login-card .tab-switch {
+  display: flex;
+  margin-bottom: 30px;
+  border-radius: 25px;
+  background: rgba(255,255,255,0.06);
+  padding: 4px;
+  position: relative;
+}
+
+.login-card .tab-switch .tab-btn {
+  flex: 1;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 22px;
+  color: rgba(255,255,255,0.6);
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  position: relative;
+  z-index: 1;
+  background: transparent;
+  border: none;
+  font-family: inherit;
+}
+
+/* 激活的Tab（红色渐变 + 发光） */
+.login-card .tab-switch .tab-btn.active {
+  color: #fff;
+  background: linear-gradient(135deg, var(--jd-red, #c81623), #e60012);
+  box-shadow: 0 4px 15px rgba(200,22,35,0.4);
+}
+
+/* ========== 表单输入组 ========== */
+.login-card .form-group {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+/* 输入框前置图标 */
+.login-card .form-group .input-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: rgba(255,255,255,0.4);
+  pointer-events: none;              /* 图标不阻挡输入 */
+  transition: color 0.3s;
+  z-index: 2;
+}
+
+/* 输入框（深色半透明 + 发光边框） */
+.login-card .form-group input {
+  width: 100%;
+  height: 50px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 12px;
+  padding: 0 16px 0 48px;            /* 左侧留空给图标 */
+  font-size: 15px;
+  color: #fff;
+  font-family: inherit;
+  transition: all 0.3s ease;
+}
+
+/* placeholder颜色 */
+.login-card .form-group input::placeholder {
+  color: rgba(255,255,255,0.3);
+}
+
+/* 聚焦效果（亮背景 + 红边框 + 红色光晕） */
+.login-card .form-group input:focus {
+  background: rgba(255,255,255,0.12);
+  border-color: var(--jd-red, #c81623);
+  box-shadow: 0 0 0 4px rgba(200,22,35,0.1);
+}
+
+/* 聚焦时图标变红 */
+.login-card .form-group input:focus + .input-icon,
+.login-card .form-group input:focus ~ .input-icon {
+  color: var(--jd-red, #c81623);
+}
+
+/* ========== 验证码行 ========== */
+.login-card .captcha-row {
+  display: flex;
+  gap: 12px;
+}
+
+.login-card .captcha-row input {
+  flex: 1;
+  padding-left: 16px !important;     /* 验证码输入框不需要左侧图标 */
+}
+
+/* 验证码图片（倾斜字体 + 可点击刷新） */
+.login-card .captcha-row .captcha-img {
+  width: 120px;
+  height: 50px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: bold;
+  color: #fff;
+  cursor: pointer;
+  letter-spacing: 4px;
+  user-select: none;                 /* 禁止选中文字 */
+  font-style: italic;
+  transition: all 0.3s;
+}
+
+.login-card .captcha-row .captcha-img:hover {
+  background: rgba(255,255,255,0.15);
+  border-color: rgba(255,255,255,0.3);
+}
+
+/* ========== 记住密码 / 忘记密码 选项行 ========== */
+.login-card .options-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  font-size: 13px;
+}
+
+/* 自定义复选框 */
+.login-card .options-row .remember {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: rgba(255,255,255,0.6);
+  cursor: pointer;
+}
+
+.login-card .options-row .remember input[type="checkbox"] {
+  display: none;                     /* 隐藏原生复选框 */
+}
+
+.login-card .options-row .remember .check-box {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  font-size: 11px;
+  color: transparent;
+}
+
+/* 选中状态 */
+.login-card .options-row .remember input:checked + .check-box {
+  background: var(--jd-red, #c81623);
+  border-color: var(--jd-red, #c81623);
+  color: #fff;
+}
+
+.login-card .options-row .forgot {
+  color: rgba(255,255,255,0.5);
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.login-card .options-row .forgot:hover {
+  color: var(--gold, #f5a623);
+}
+
+/* ========== 登录/注册提交按钮 ========== */
+.login-card .submit-btn {
+  width: 100%;
+  height: 50px;
+  border-radius: 25px;               /* 胶囊按钮 */
+  border: none;
+  background: linear-gradient(135deg, var(--jd-red, #c81623), #e60012);
+  color: #fff;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+  letter-spacing: 3px;
+  font-family: inherit;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.login-card .submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(200,22,35,0.45);
+  letter-spacing: 5px;
+}
+
+.login-card .submit-btn:active {
+  transform: translateY(0);           /* 按下时回弹 */
+}
+
+/* 按钮光泽扫过动画 */
+.login-card .submit-btn::after {
+  content: "";
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255,255,255,0.15), transparent);
+  transform: rotate(45deg);
+  animation: btnShimmer 2s infinite;
+}
+
+@keyframes btnShimmer {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* ========== 消息提示 ========== */
+.login-card .msg-tip {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 13px;
+  min-height: 20px;
+  transition: all 0.3s;
+}
+
+/* 错误提示（红色 + 抖动） */
+.login-card .msg-tip.error {
+  color: #ff6b6b;
+  animation: shake 0.5s ease;
+}
+
+/* 成功提示（绿色） */
+.login-card .msg-tip.success {
+  color: #4caf50;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-8px); }
+  75% { transform: translateX(8px); }
+}
+
+/* ========== 底部链接 ========== */
+.login-card .bottom-links {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.4);
+}
+
+.login-card .bottom-links a {
+  color: rgba(255,255,255,0.6);
+  transition: color 0.3s;
+  margin: 0 4px;
+}
+
+.login-card .bottom-links a:hover {
+  color: var(--gold, #f5a623);
+}
+
+/* ========== 登录/注册表单切换 ========== */
+/* 默认显示登录表单，隐藏注册表单 */
+.login-card .register-form {
+  display: none;
+}
+
+/* JS添加show-register类时切换 */
+.login-card.show-register .login-form {
+  display: none;
+}
+
+.login-card.show-register .register-form {
+  display: block;
+}
+
+/* ========== 注册成功Toast弹窗 ========== */
+.toast {
+  position: fixed;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-120px);  /* 默认隐藏在顶部上方 */
+  background: linear-gradient(135deg, #4caf50, #2e7d32);
+  color: #fff;
+  padding: 14px 30px;
+  border-radius: 30px;
+  font-size: 15px;
+  font-weight: bold;
+  z-index: 99999;
+  box-shadow: 0 8px 30px rgba(76,175,80,0.4);
+  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);  /* 弹性缓动 */
+  pointer-events: none;
+}
+
+/* 显示时滑下 */
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ========== 响应式适配（小屏幕） ========== */
+@media (max-width: 500px) {
+  .login-container {
+    width: 92%;                        /* 小屏幕撑宽 */
+  }
+  .login-card {
+    padding: 30px 24px;                /* 减少内边距 */
+  }
+}

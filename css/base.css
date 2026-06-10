@@ -1,0 +1,130 @@
+/* ============================================
+   京东创意商城 - 基础样式（全局变量、重置样式）
+   作者：邹华 24215220130
+   Web编程技术课程大作业
+   ============================================ */
+
+/* ---------- CSS变量（设计系统） ---------- */
+:root {
+  /* 京东品牌红色系 */
+  --jd-red: #c81623;        /* 京东主红色 */
+  --jd-red-light: #e60012;  /* 亮红色（悬停/高亮） */
+  --jd-red-dark: #9b1019;   /* 暗红色（按下/深色背景） */
+
+  /* 金色（强调/会员/促销） */
+  --gold: #f5a623;
+  --gold-light: #ffc107;
+
+  /* 背景与卡片 */
+  --bg-dark: #1a1a2e;       /* 深色背景（导航/底部/秒杀头） */
+  --bg-card: #ffffff;       /* 卡片白色背景 */
+
+  /* 文字层级 */
+  --text-primary: #333;     /* 主文字 */
+  --text-secondary: #666;   /* 次要文字 */
+  --text-muted: #999;       /* 辅助/弱化文字 */
+
+  /* 边框与阴影 */
+  --border-color: #e8e8e8;
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);   /* 轻阴影 */
+  --shadow-md: 0 4px 20px rgba(0,0,0,0.1);   /* 中等阴影 */
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.15);  /* 重阴影 */
+  --shadow-red: 0 4px 20px rgba(200,22,35,0.25); /* 红色发光阴影 */
+
+  /* 圆角 */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  /* 统一过渡动画曲线 */
+  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ---------- 全局重置 ---------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;   /* border-box盒模型，宽高包含padding和border */
+}
+
+html {
+  scroll-behavior: smooth;   /* 平滑滚动 */
+}
+
+body {
+  font: 14px/1.6 "Microsoft YaHei", "PingFang SC", "Helvetica Neue", sans-serif;
+  color: var(--text-primary);
+  background: #f0f2f5;       /* 页面底色（浅灰） */
+  min-width: 1240px;         /* 最小宽度保证布局不崩 */
+  overflow-x: hidden;        /* 禁止横向滚动条 */
+}
+
+/* ---------- 自定义滚动条（京东红渐变） ---------- */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f0f2f5;       /* 滚动条轨道 */
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--jd-red), var(--jd-red-light));
+  border-radius: 4px;        /* 滚动条滑块 */
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--jd-red-dark);
+}
+
+/* 去掉列表和斜体默认样式 */
+ul, ol { list-style: none; }
+em, i { font-style: normal; }
+
+/* ---------- 链接基础样式 ---------- */
+a {
+  text-decoration: none;     /* 去掉下划线 */
+  color: var(--text-primary);
+  transition: color var(--transition);
+}
+
+/* ---------- 图片基础样式 ---------- */
+img {
+  width: 100%;
+  height: 100%;
+  vertical-align: middle;   /* 消除图片底部间隙 */
+  object-fit: cover;        /* 裁剪填充，保持比例 */
+  transition: transform 0.5s ease; /* 悬停放大过渡 */
+}
+
+/* ---------- 表单元素重置 ---------- */
+input, button {
+  border: none;
+  outline: none;
+  font-family: inherit;     /* 继承body字体 */
+}
+
+button {
+  cursor: pointer;          /* 按钮手型光标 */
+}
+
+/* ---------- 标题重置 ---------- */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 400;         /* 去掉标题加粗 */
+}
+
+/* ---------- 文本选中颜色 ---------- */
+::selection {
+  background: var(--jd-red);
+  color: #fff;
+}
+
+/* ---------- Canvas粒子背景 ---------- */
+/* 固定在背后的canvas，不阻挡交互 */
+#particleCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;      /* 鼠标事件穿透 */
+  z-index: 0;
+  opacity: 0.35;             /* 半透明效果 */
+}
